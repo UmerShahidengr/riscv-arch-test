@@ -1,0 +1,511 @@
+ecall:
+  config: 
+    - check ISA:=regex(.*I.*); def rvtest_mtrap_routine=True 
+  mnemonics: 
+    ecall: 0
+
+ebreak:
+  config: 
+    - check ISA:=regex(.*I.*); def rvtest_mtrap_routine=True 
+  mnemonics: 
+    ebreak: 0
+
+
+
+
+PMP-CSR-access:
+  cond: check ISA:=regex(.*I.*Zicsr.*)
+  config: 
+    - check ISA:=regex(.*I.*); check hw_data_misaligned_support:=True
+    - check ISA:=regex(.*I.*Zicsr.*); check hw_data_misaligned_support:=True; def rvtest_mtrap_routine=True
+  mnemonics: 
+    csrrw: 0
+    csrrs: 0
+  val_comb:
+    rd == x0 : 0
+    rd != x0 : 0
+
+
+PMP-OddCSR-access:
+  cond: check ISA:=regex(.*I.*Zicsr.*)
+  config: 
+    - check ISA:=regex(.*I.*); check hw_data_misaligned_support:=True
+    - check ISA:=regex(.*I.*Zicsr.*); check hw_data_misaligned_support:=True; def rvtest_mtrap_routine=True
+  mnemonics: 
+    csrrw: 0
+    csrrs: 0
+  val_comb:
+    rd == x0 : 0
+    rd != x0 : 0
+
+PMP-CFG-reg:
+  cond: check ISA:=regex(.*I.*Zicsr.*)
+  config: 
+    - check ISA:=regex(.*I.*); check hw_data_misaligned_support:=True
+    - check ISA:=regex(.*I.*Zicsr.*); check hw_data_misaligned_support:=True; def rvtest_mtrap_routine=True
+  mnemonics: 
+    csrrw: 0
+    csrrs: 0
+  val_comb:
+    rd == x0 : 0
+    rd != x0 : 0
+    rs1_val & 0x80 != 0 : 0
+
+
+
+
+PMP-protection:
+  cond: check ISA:=regex(.*I.*Zicsr.*)
+  config: 
+    - check ISA:=regex(.*I.*); check hw_data_misaligned_support:=True
+    - check ISA:=regex(.*I.*Zicsr.*); check hw_data_misaligned_support:=True; def rvtest_mtrap_routine=True
+  mnemonics: 
+    csrrw: 0
+    csrrs: 0
+  val_comb:
+    rd == x0 : 0
+    rd != x0 : 0
+    rs1_val & 0x01 != 0 : 0
+    rs1_val & 0x02 != 0 : 0
+    rs1_val & 0x03 != 0 : 0
+    rs1_val & 0x04 != 0 : 0
+    rs1_val & 0x05 != 0 : 0
+    rs1_val & 0x06 != 0 : 0
+    rs1_val & 0x07 != 0 : 0
+    rs1_val & 0x08 != 0 : 0
+    rs1_val & 0x09 != 0 : 0
+    rs1_val & 0x0A != 0 : 0
+    rs1_val & 0x0B != 0 : 0
+    rs1_val & 0x0C != 0 : 0
+    rs1_val & 0x0D != 0 : 0
+    rs1_val & 0x0E != 0 : 0
+    rs1_val & 0x0F != 0 : 0
+    rs1_val & 0x81 != 0 : 0
+    rs1_val & 0x82 != 0 : 0
+    rs1_val & 0x83 != 0 : 0
+    rs1_val & 0x84 != 0 : 0
+    rs1_val & 0x85 != 0 : 0
+    rs1_val & 0x86 != 0 : 0
+    rs1_val & 0x87 != 0 : 0
+    rs1_val & 0x88 != 0 : 0
+    rs1_val & 0x89 != 0 : 0
+    rs1_val & 0x8A != 0 : 0
+    rs1_val & 0x8B != 0 : 0
+    rs1_val & 0x8C != 0 : 0
+    rs1_val & 0x8D != 0 : 0
+    rs1_val & 0x8E != 0 : 0
+    rs1_val & 0x8F != 0 : 0
+    rs1_val & 0x0100 != 0 : 0
+    rs1_val & 0x0200 != 0 : 0
+    rs1_val & 0x0300 != 0 : 0
+    rs1_val & 0x0400 != 0 : 0
+    rs1_val & 0x0500 != 0 : 0
+    rs1_val & 0x0600 != 0 : 0
+    rs1_val & 0x0700 != 0 : 0
+    rs1_val & 0x0800 != 0 : 0
+    rs1_val & 0x0900 != 0 : 0
+    rs1_val & 0x0A00 != 0 : 0
+    rs1_val & 0x0B00 != 0 : 0
+    rs1_val & 0x0C00 != 0 : 0
+    rs1_val & 0x0D00 != 0 : 0
+    rs1_val & 0x0E00 != 0 : 0
+    rs1_val & 0x0F00 != 0 : 0
+    rs1_val & 0x8100 != 0 : 0
+    rs1_val & 0x8200 != 0 : 0
+    rs1_val & 0x8300 != 0 : 0
+    rs1_val & 0x8400 != 0 : 0
+    rs1_val & 0x8500 != 0 : 0
+    rs1_val & 0x8600 != 0 : 0
+    rs1_val & 0x8700 != 0 : 0
+    rs1_val & 0x8800 != 0 : 0
+    rs1_val & 0x8900 != 0 : 0
+    rs1_val & 0x8A00 != 0 : 0
+    rs1_val & 0x8B00 != 0 : 0
+    rs1_val & 0x8C00 != 0 : 0
+    rs1_val & 0x8D00 != 0 : 0
+    rs1_val & 0x8E00 != 0 : 0
+    rs1_val & 0x8F00 != 0 : 0
+    rs1_val & 0x010000 != 0 : 0
+    rs1_val & 0x020000 != 0 : 0
+    rs1_val & 0x030000 != 0 : 0
+    rs1_val & 0x040000 != 0 : 0
+    rs1_val & 0x050000 != 0 : 0
+    rs1_val & 0x060000 != 0 : 0
+    rs1_val & 0x070000 != 0 : 0
+    rs1_val & 0x080000 != 0 : 0
+    rs1_val & 0x090000 != 0 : 0
+    rs1_val & 0x0A0000 != 0 : 0
+    rs1_val & 0x0B0000 != 0 : 0
+    rs1_val & 0x0C0000 != 0 : 0
+    rs1_val & 0x0D0000 != 0 : 0
+    rs1_val & 0x0E0000 != 0 : 0
+    rs1_val & 0x0F0000 != 0 : 0
+    rs1_val & 0x810000 != 0 : 0
+    rs1_val & 0x820000 != 0 : 0
+    rs1_val & 0x830000 != 0 : 0
+    rs1_val & 0x840000 != 0 : 0
+    rs1_val & 0x850000 != 0 : 0
+    rs1_val & 0x860000 != 0 : 0
+    rs1_val & 0x870000 != 0 : 0
+    rs1_val & 0x880000 != 0 : 0
+    rs1_val & 0x890000 != 0 : 0
+    rs1_val & 0x8A0000 != 0 : 0
+    rs1_val & 0x8B0000 != 0 : 0
+    rs1_val & 0x8C0000 != 0 : 0
+    rs1_val & 0x8D0000 != 0 : 0
+    rs1_val & 0x8E0000 != 0 : 0
+    rs1_val & 0x8F0000 != 0 : 0
+    rs1_val & 0x01000000 != 0 : 0
+    rs1_val & 0x02000000 != 0 : 0
+    rs1_val & 0x03000000 != 0 : 0
+    rs1_val & 0x04000000 != 0 : 0
+    rs1_val & 0x05000000 != 0 : 0
+    rs1_val & 0x06000000 != 0 : 0
+    rs1_val & 0x07000000 != 0 : 0
+    rs1_val & 0x08000000 != 0 : 0
+    rs1_val & 0x09000000 != 0 : 0
+    rs1_val & 0x0A000000 != 0 : 0
+    rs1_val & 0x0B000000 != 0 : 0
+    rs1_val & 0x0C000000 != 0 : 0
+    rs1_val & 0x0D000000 != 0 : 0
+    rs1_val & 0x0E000000 != 0 : 0
+    rs1_val & 0x0F000000 != 0 : 0
+    rs1_val & 0x81000000 != 0 : 0
+    rs1_val & 0x82000000 != 0 : 0
+    rs1_val & 0x83000000 != 0 : 0
+    rs1_val & 0x84000000 != 0 : 0
+    rs1_val & 0x85000000 != 0 : 0
+    rs1_val & 0x86000000 != 0 : 0
+    rs1_val & 0x87000000 != 0 : 0
+    rs1_val & 0x88000000 != 0 : 0
+    rs1_val & 0x89000000 != 0 : 0
+    rs1_val & 0x8A000000 != 0 : 0
+    rs1_val & 0x8B000000 != 0 : 0
+    rs1_val & 0x8C000000 != 0 : 0
+    rs1_val & 0x8D000000 != 0 : 0
+    rs1_val & 0x8E000000 != 0 : 0
+    rs1_val & 0x8F000000 != 0 : 0
+
+
+
+
+
+
+PMP:
+  cond: check ISA:=regex(.*I.*Zicsr.*)
+  config: 
+    - check ISA:=regex(.*I.*); check hw_data_misaligned_support:=True
+    - check ISA:=regex(.*I.*Zicsr.*); check hw_data_misaligned_support:=True; def rvtest_mtrap_routine=True
+  mnemonics: 
+    csrrw: 0
+  val_comb:
+    rd == x0 : 0
+    rs1_val & 0x01 != 0 : 0
+    rs1_val & 0x02 != 0 : 0
+    rs1_val & 0x03 != 0 : 0
+    rs1_val & 0x04 != 0 : 0
+    rs1_val & 0x05 != 0 : 0
+    rs1_val & 0x06 != 0 : 0
+    rs1_val & 0x07 != 0 : 0
+    rs1_val & 0x08 != 0 : 0
+    rs1_val & 0x09 != 0 : 0
+    rs1_val & 0x0A != 0 : 0
+    rs1_val & 0x0B != 0 : 0
+    rs1_val & 0x0C != 0 : 0
+    rs1_val & 0x0D != 0 : 0
+    rs1_val & 0x0E != 0 : 0
+    rs1_val & 0x0F != 0 : 0
+    rs1_val & 0x81 != 0 : 0
+    rs1_val & 0x82 != 0 : 0
+    rs1_val & 0x83 != 0 : 0
+    rs1_val & 0x84 != 0 : 0
+    rs1_val & 0x85 != 0 : 0
+    rs1_val & 0x86 != 0 : 0
+    rs1_val & 0x87 != 0 : 0
+    rs1_val & 0x88 != 0 : 0
+    rs1_val & 0x89 != 0 : 0
+    rs1_val & 0x8A != 0 : 0
+    rs1_val & 0x8B != 0 : 0
+    rs1_val & 0x8C != 0 : 0
+    rs1_val & 0x8D != 0 : 0
+    rs1_val & 0x8E != 0 : 0
+    rs1_val & 0x8F != 0 : 0
+    rs1_val & 0x0100 != 0 : 0
+    rs1_val & 0x0200 != 0 : 0
+    rs1_val & 0x0300 != 0 : 0
+    rs1_val & 0x0400 != 0 : 0
+    rs1_val & 0x0500 != 0 : 0
+    rs1_val & 0x0600 != 0 : 0
+    rs1_val & 0x0700 != 0 : 0
+    rs1_val & 0x0800 != 0 : 0
+    rs1_val & 0x0900 != 0 : 0
+    rs1_val & 0x0A00 != 0 : 0
+    rs1_val & 0x0B00 != 0 : 0
+    rs1_val & 0x0C00 != 0 : 0
+    rs1_val & 0x0D00 != 0 : 0
+    rs1_val & 0x0E00 != 0 : 0
+    rs1_val & 0x0F00 != 0 : 0
+    rs1_val & 0x8100 != 0 : 0
+    rs1_val & 0x8200 != 0 : 0
+    rs1_val & 0x8300 != 0 : 0
+    rs1_val & 0x8400 != 0 : 0
+    rs1_val & 0x8500 != 0 : 0
+    rs1_val & 0x8600 != 0 : 0
+    rs1_val & 0x8700 != 0 : 0
+    rs1_val & 0x8800 != 0 : 0
+    rs1_val & 0x8900 != 0 : 0
+    rs1_val & 0x8A00 != 0 : 0
+    rs1_val & 0x8B00 != 0 : 0
+    rs1_val & 0x8C00 != 0 : 0
+    rs1_val & 0x8D00 != 0 : 0
+    rs1_val & 0x8E00 != 0 : 0
+    rs1_val & 0x8F00 != 0 : 0
+    rs1_val & 0x010000 != 0 : 0
+    rs1_val & 0x020000 != 0 : 0
+    rs1_val & 0x030000 != 0 : 0
+    rs1_val & 0x040000 != 0 : 0
+    rs1_val & 0x050000 != 0 : 0
+    rs1_val & 0x060000 != 0 : 0
+    rs1_val & 0x070000 != 0 : 0
+    rs1_val & 0x080000 != 0 : 0
+    rs1_val & 0x090000 != 0 : 0
+    rs1_val & 0x0A0000 != 0 : 0
+    rs1_val & 0x0B0000 != 0 : 0
+    rs1_val & 0x0C0000 != 0 : 0
+    rs1_val & 0x0D0000 != 0 : 0
+    rs1_val & 0x0E0000 != 0 : 0
+    rs1_val & 0x0F0000 != 0 : 0
+    rs1_val & 0x810000 != 0 : 0
+    rs1_val & 0x820000 != 0 : 0
+    rs1_val & 0x830000 != 0 : 0
+    rs1_val & 0x840000 != 0 : 0
+    rs1_val & 0x850000 != 0 : 0
+    rs1_val & 0x860000 != 0 : 0
+    rs1_val & 0x870000 != 0 : 0
+    rs1_val & 0x880000 != 0 : 0
+    rs1_val & 0x890000 != 0 : 0
+    rs1_val & 0x8A0000 != 0 : 0
+    rs1_val & 0x8B0000 != 0 : 0
+    rs1_val & 0x8C0000 != 0 : 0
+    rs1_val & 0x8D0000 != 0 : 0
+    rs1_val & 0x8E0000 != 0 : 0
+    rs1_val & 0x8F0000 != 0 : 0
+    rs1_val & 0x01000000 != 0 : 0
+    rs1_val & 0x02000000 != 0 : 0
+    rs1_val & 0x03000000 != 0 : 0
+    rs1_val & 0x04000000 != 0 : 0
+    rs1_val & 0x05000000 != 0 : 0
+    rs1_val & 0x06000000 != 0 : 0
+    rs1_val & 0x07000000 != 0 : 0
+    rs1_val & 0x08000000 != 0 : 0
+    rs1_val & 0x09000000 != 0 : 0
+    rs1_val & 0x0A000000 != 0 : 0
+    rs1_val & 0x0B000000 != 0 : 0
+    rs1_val & 0x0C000000 != 0 : 0
+    rs1_val & 0x0D000000 != 0 : 0
+    rs1_val & 0x0E000000 != 0 : 0
+    rs1_val & 0x0F000000 != 0 : 0
+    rs1_val & 0x81000000 != 0 : 0
+    rs1_val & 0x82000000 != 0 : 0
+    rs1_val & 0x83000000 != 0 : 0
+    rs1_val & 0x84000000 != 0 : 0
+    rs1_val & 0x85000000 != 0 : 0
+    rs1_val & 0x86000000 != 0 : 0
+    rs1_val & 0x87000000 != 0 : 0
+    rs1_val & 0x88000000 != 0 : 0
+    rs1_val & 0x89000000 != 0 : 0
+    rs1_val & 0x8A000000 != 0 : 0
+    rs1_val & 0x8B000000 != 0 : 0
+    rs1_val & 0x8C000000 != 0 : 0
+    rs1_val & 0x8D000000 != 0 : 0
+    rs1_val & 0x8E000000 != 0 : 0
+    rs1_val & 0x8F000000 != 0 : 0
+
+misalign-lh:
+  cond: check ISA:=regex(.*I.*Zicsr.*)
+  config:
+    - check ISA:=regex(.*I.*); check hw_data_misaligned_support:=True
+    - check ISA:=regex(.*I.*Zicsr.*); check hw_data_misaligned_support:=False; def rvtest_mtrap_routine=True
+  mnemonics:
+    lh: 0
+  val_comb:
+    'ea_align == 1': 0
+
+
+misalign-lhu:
+  config:
+    - check ISA:=regex(.*I.*); check hw_data_misaligned_support:=True
+    - check ISA:=regex(.*I.*Zicsr.*); check hw_data_misaligned_support:=False; def rvtest_mtrap_routine=True
+  cond: check ISA:=regex(.*I.*Zicsr.*)
+  mnemonics:
+    lhu: 0
+  val_comb:
+    'ea_align == 1': 0
+
+misalign-lwu:
+  config:
+    - check ISA:=regex(.*I.*); check hw_data_misaligned_support:=True
+    - check ISA:=regex(.*I.*Zicsr.*); check hw_data_misaligned_support:=False; def rvtest_mtrap_routine=True
+  cond: check ISA:=regex(.*64.*I.*Zicsr.*)
+  mnemonics:
+    lwu: 0
+  val_comb:
+    'ea_align == 1': 0
+    'ea_align == 2': 0
+    'ea_align == 3': 0
+
+misalign-sd:
+  config:
+    - check ISA:=regex(.*I.*); check hw_data_misaligned_support:=True
+    - check ISA:=regex(.*I.*Zicsr.*); check hw_data_misaligned_support:=False; def rvtest_mtrap_routine=True
+  cond: check ISA:=regex(.*64.*I.*Zicsr.*)
+  mnemonics:
+    sd: 0
+  val_comb:
+    'ea_align == 1': 0
+    'ea_align == 2': 0
+    'ea_align == 3': 0
+    'ea_align == 4': 0
+    'ea_align == 5': 0
+    'ea_align == 6': 0
+    'ea_align == 7': 0
+
+misalign-ld:
+  config:
+    - check ISA:=regex(.*I.*); check hw_data_misaligned_support:=True
+    - check ISA:=regex(.*I.*Zicsr.*); check hw_data_misaligned_support:=False; def rvtest_mtrap_routine=True
+  cond: check ISA:=regex(.*64.*I.*)
+  mnemonics:
+    ld: 0
+  val_comb:
+    'ea_align == 1': 0
+    'ea_align == 2': 0
+    'ea_align == 3': 0
+    'ea_align == 4': 0
+    'ea_align == 5': 0
+    'ea_align == 6': 0
+    'ea_align == 7': 0
+
+misalign-lw:
+  config:
+    - check ISA:=regex(.*I.*); check hw_data_misaligned_support:=True
+    - check ISA:=regex(.*I.*Zicsr.*); check hw_data_misaligned_support:=False; def rvtest_mtrap_routine=True
+  cond: check ISA:=regex(.*I.*Zicsr.*)
+  mnemonics:
+    lw: 0
+  val_comb:
+    'ea_align == 1': 0
+    'ea_align == 2': 0
+    'ea_align == 3': 0
+
+misalign-sh:
+  config:
+    - check ISA:=regex(.*I.*); check hw_data_misaligned_support:=True
+    - check ISA:=regex(.*I.*Zicsr.*); check hw_data_misaligned_support:=False; def rvtest_mtrap_routine=True
+  cond: check ISA:=regex(.*I.*Zicsr.*)
+  mnemonics:
+    sh: 0
+  val_comb:
+    'ea_align == 1': 0
+
+misalign-sw:
+  config:
+    - check ISA:=regex(.*I.*); check hw_data_misaligned_support:=True
+    - check ISA:=regex(.*I.*Zicsr.*); check hw_data_misaligned_support:=False; def rvtest_mtrap_routine=True
+  cond: check ISA:=regex(.*I.*Zicsr.*)
+  mnemonics:
+    sw: 0
+  val_comb:
+    'ea_align == 1': 0
+    'ea_align == 2': 0
+    'ea_align == 3': 0
+
+misalign2-jalr:
+  config:
+    - check ISA:=regex(.*I.*C.*)
+    - check ISA:=regex(.*I.*Zicsr.*); check ISA:=regex(^[^C]+$); def rvtest_mtrap_routine=True 
+  cond: check ISA:=regex(.*I.*)
+  mnemonics:
+    jalr: 0
+  val_comb:
+    'ea_align == 2': 0
+
+misalign1-jalr:
+  config: 
+    - check ISA:=regex(.*I.*); def rvtest_mtrap_routine=True
+  mnemonics:
+    jalr: 0
+  val_comb:
+    'ea_align == 1': 0
+
+misalign-jal:
+  config:
+    - check ISA:=regex(.*I.*C.*)
+    - check ISA:=regex(.*I.*Zicsr.*); check ISA:=regex(^[^C]+$); def rvtest_mtrap_routine=True 
+  cond: check ISA:=regex(.*I.*)
+  mnemonics:
+    jal: 0
+  val_comb:
+    'ea_align == 2': 0
+
+misalign-bge:
+  config:
+    - check ISA:=regex(.*I.*C.*)
+    - check ISA:=regex(.*I.*Zicsr.*); check ISA:=regex(^[^C]+$); def rvtest_mtrap_routine=True 
+  cond: check ISA:=regex(.*I.*)
+  mnemonics:
+    bge: 0
+  val_comb:
+    ' rs1_val>rs2_val and ea_align == 2': 0
+
+misalign-bgeu:
+  config:
+    - check ISA:=regex(.*I.*C.*)
+    - check ISA:=regex(.*I.*Zicsr.*); check ISA:=regex(^[^C]+$); def rvtest_mtrap_routine=True 
+  cond: check ISA:=regex(.*I.*)
+  mnemonics:
+    bgeu: 0
+  val_comb:
+    ' rs1_val>rs2_val and ea_align == 2': 0
+
+misalign-blt:
+  config:
+    - check ISA:=regex(.*I.*C.*)
+    - check ISA:=regex(.*I.*Zicsr.*); check ISA:=regex(^[^C]+$); def rvtest_mtrap_routine=True 
+  cond: check ISA:=regex(.*I.*)
+  mnemonics:
+    blt: 0
+  val_comb:
+    ' rs1_val<rs2_val and ea_align == 2': 0
+
+misalign-bltu:
+  config:
+    - check ISA:=regex(.*I.*C.*)
+    - check ISA:=regex(.*I.*Zicsr.*); check ISA:=regex(^[^C]+$); def rvtest_mtrap_routine=True 
+  cond: check ISA:=regex(.*I.*)
+  mnemonics:
+    bltu: 0
+  val_comb:
+    ' rs1_val<rs2_val and ea_align == 2': 0
+
+misalign-bne:
+  config:
+    - check ISA:=regex(.*I.*C.*)
+    - check ISA:=regex(.*I.*Zicsr.*); check ISA:=regex(^[^C]+$); def rvtest_mtrap_routine=True 
+  cond: check ISA:=regex(.*I.*)
+  mnemonics:
+    bne: 0
+  val_comb:
+    ' rs1_val!=rs2_val and ea_align == 2': 0
+
+misalign-beq:
+  config:
+    - check ISA:=regex(.*I.*C.*)
+    - check ISA:=regex(.*I.*Zicsr.*); check ISA:=regex(^[^C]+$); def rvtest_mtrap_routine=True 
+  cond: check ISA:=regex(.*I.*)
+  mnemonics:
+    beq: 0
+  val_comb:
+    ' rs1_val==rs2_val and ea_align == 2': 0
+
+

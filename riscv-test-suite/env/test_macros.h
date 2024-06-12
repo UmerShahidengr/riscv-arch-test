@@ -1074,6 +1074,22 @@ RVTEST_SIGUPD_F(swreg,destreg,flagreg)
     sub x1,x1,tempreg			;\
     RVTEST_SIGUPD(swreg,x1,offset) 
 
+#define TEST_CBO_ZERO(swreg,rs1,inst,imm_val)                               ;\
+LI(rs1,imm_val&(RVMODEL_CBZ_BLOCKSIZE-1))                                   ;\
+add rs1,rs1,swreg                                                           ;\
+inst (rs1)                                                                  ;\
+nop                                                                         ;\
+nop                                                                         ;\
+ADDI(swreg, swreg, RVMODEL_CBZ_BLOCKSIZE)
+
+
+//Tests for instructions with single (rd/rs1) register operand.
+#define TEST_CRD_OP(inst, destreg, correctval, val1, swreg, offset, testreg) \
+    TEST_CASE(testreg, destreg, correctval, swreg, offset, \
+      LI(destreg, MASK_XLEN(val1))		;\
+      inst destreg		;\
+      )
+
 
 //--------------------------------- Migration aliases ------------------------------------------
 #ifdef RV_COMPLIANCE_RV32M

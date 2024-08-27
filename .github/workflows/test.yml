@@ -53,7 +53,7 @@ jobs:
       - name: Install Spike
         run: |
           git clone https://github.com/riscv/riscv-isa-sim.git
-          apt-get install device-tree-compiler libboost-regex-dev libboost-system-dev
+          sudo apt-get install device-tree-compiler libboost-regex-dev libboost-system-dev
           cd riscv-isa-sim
           mkdir build
           cd build

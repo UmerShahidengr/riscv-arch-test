@@ -80,8 +80,7 @@ class sail_cSim(pluginTemplate):
             logger.error(self.make+": executable not found. Please check environment setup.")
             raise SystemExit(1)
 
-
-    def runTests(self, testList, cgf_file=None):
+    def runTests(self, testList, cgf_file=None, header_file= None):
         if os.path.exists(self.work_dir+ "/Makefile." + self.name[:-1]):
             os.remove(self.work_dir+ "/Makefile." + self.name[:-1])
         make = utils.makeUtil(makefilePath=os.path.join(self.work_dir, "Makefile." + self.name[:-1]))
@@ -102,20 +101,28 @@ class sail_cSim(pluginTemplate):
 
             execute += self.objdump_cmd.format(elf, self.xlen, 'ref.disass')
             sig_file = os.path.join(test_dir, self.name[:-1] + ".signature")
-# here 8796093022208 is 8 exabytes 
-            execute += self.sail_exe[self.xlen] + ' -i -v --enable-zpm --pmp-count=16 --pmp-grain=0 --ram-size=8796093022208 --signature-granularity=8 --test-signature={0} {1} > {2}.log 2>&1;'.format(sig_file, elf, test_name)
+
+            execute += self.sail_exe[self.xlen] + '  -i -v --enable-zpm --pmp-count=16 --pmp-grain=0 --ram-size=8796093022208 --signature-granularity=8  --test-signature={0} {1} > {2}.log 2>&1;'.format(sig_file, elf, test_name)
 
             cov_str = ' '
             for label in testentry['coverage_labels']:
                 cov_str+=' -l '+label
+
+            cgf_mac = ' '
+            header_file_flag = ' '
+            if header_file is not None:
+                header_file_flag = f' -h {header_file} '
+                cgf_mac += ' -cm common '
+                for macro in testentry['mac']:
+                    cgf_mac+=' -cm '+macro
 
             if cgf_file is not None:
                 coverage_cmd = 'riscv_isac --verbose info coverage -d \
                         -t {0}.log --parser-name c_sail -o coverage.rpt  \
                         --sig-label begin_signature  end_signature \
                         --test-label rvtest_code_begin rvtest_code_end \
-                        -e ref.elf -c {1} -x{2} {3};'.format(\
-                        test_name, ' -c '.join(cgf_file), self.xlen, cov_str)
+                        -e ref.elf -c {1} -x{2} {3} {4} {5};'.format(\
+                        test_name, ' -c '.join(cgf_file), self.xlen, cov_str, header_file_flag, cgf_mac)
             else:
                 coverage_cmd = ''
 

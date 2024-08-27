@@ -50,11 +50,6 @@ jobs:
           tar -xzf riscv64-elf-ubuntu-20.04-nightly-2023.04.29-nightly.tar.gz
           echo $GITHUB_WORKSPACE/riscv/bin >> $GITHUB_PATH
       
-      - name: Build 64-bit RISCV-GNU Toolchain
-        run: |
-          ./configure --prefix=/opt/riscv
-          make
-
       - name: Install Spike
         run: |
           git clone https://github.com/riscv/riscv-isa-sim.git

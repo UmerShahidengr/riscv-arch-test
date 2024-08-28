@@ -76,6 +76,17 @@ jobs:
           ARCH=RV64 make
           sudo ln -s sail-riscv/c_emulator/riscv_sim_RV64 /usr/bin/riscv_sim_RV64
           sudo ln -s sail-riscv/c_emulator/riscv_sim_RV32 /usr/bin/riscv_sim_RV32      
+
+      - name: Install riscv-isac
+        run: |
+          cd riscv-isac
+          pip3 install --editable .
+
+      - name: Install riscv-ctg
+        run: |
+          cd riscv-ctg
+          pip3 install --editable .
+      
       
       - name: Config and run riscof for RV32
         run: |

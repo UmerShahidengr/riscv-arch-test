@@ -90,9 +90,9 @@ jobs:
       
       - name: Config and run riscof for RV32
         run: |
-          riscof run --config riscof-plugin/rv32/config.ini --suite riscv-test-suite/ --env riscv-test-suite/env
+          riscof run --config riscof-plugins/rv32/config.ini --suite riscv-test-suite/ --env riscv-test-suite/env
 
 
       - name: Config and run riscof for RV64
         run: |
-          riscof run --config riscof-plugin/rv64/config.ini --suite riscv-test-suite/ --env riscv-test-suite/env
+          riscof run --config riscof-plugins/rv64/config.ini --suite riscv-test-suite/ --env riscv-test-suite/env

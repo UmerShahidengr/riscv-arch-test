@@ -1059,6 +1059,7 @@ def compute_per_line(queue, event, cgf_queue, stats_queue, cgf, xlen, flen, addr
             globals()['get_pte_prop'] = get_pte_prop
 
             if enable :
+                print(instr_vars)
                 ucovpt = []
                 covpt = []
                 csr_covpt = []
@@ -1135,6 +1136,7 @@ def compute_per_line(queue, event, cgf_queue, stats_queue, cgf, xlen, flen, addr
                                     value['rs3'][rs3] += 1
 
                                 if 'op_comb' in value and len(value['op_comb']) != 0 :
+                                    
                                     for coverpoints in value['op_comb']:
                                         if eval(coverpoints, globals(), instr_vars):
                                             if cgf[cov_labels]['op_comb'][coverpoints] == 0:

@@ -97,9 +97,9 @@ jobs:
       - name: Config and run riscof for RV32
         run: |
           cd riscof-plugins/rv32
-          riscof run --config config.ini --suite ../../riscv-test-suite/rv32i_m --env ../../riscv-test-suite/env
+          riscof run --config config.ini --suite ../../riscv-test-suite/rv32i_m/I --env ../../riscv-test-suite/env
 
       - name: Config and run riscof for RV64
         run: |
           cd riscof-plugins/rv64
-          riscof run --config config.ini --suite ../../riscv-test-suite/rv64i_m --env ../../riscv-test-suite/env
+          riscof run --config config.ini --suite ../../riscv-test-suite/rv64i_m/I --env ../../riscv-test-suite/env

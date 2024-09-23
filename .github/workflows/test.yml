@@ -28,6 +28,13 @@ jobs:
     
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix:
+        isa_group: 
+          - RV32IMCZicsr_Zifencei
+          - RV64IMCZicsr_Zifencei
+
     steps:
       - uses: actions/checkout@v2
         with:
@@ -62,4 +69,9 @@ jobs:
           echo "testing sail-riscv"
           riscv_sim_RV32 -h
           riscv_sim_RV64 -h
-
+      
+      - name: run-tests
+        run: |
+          cp .github/isa_templates/${{matrix.isa_group}}.yaml .github/ci-test/riscof/spike/spike_isa.yaml
+          cd .github/ci-test/riscof
+          ./run-tests.sh

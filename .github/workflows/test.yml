@@ -48,7 +48,7 @@ jobs:
       
       - name: Build sail-riscv
         run: |
-          .github/ci-test/sail-riscv.sh
+          .github/ci-test/build-sail-riscv.sh
           echo $GITHUB_WORKSPACE/c_emulator >> $GITHUB_PATH
       
       - name: Test Dependencies

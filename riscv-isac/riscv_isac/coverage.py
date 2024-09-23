@@ -1678,10 +1678,21 @@ def compute(trace_file, test_name, cgf, parser_name, decoder_name, detailed, xle
 
     rpt_str = gen_report(rcgf, detailed)
     logger.info('Writing out updated cgf : ' + test_name + '.cgf')
-    dump_file = open(test_name+'.cgf', 'w')
-    dump_file.write(ruamel.yaml.round_trip_dump(rcgf, indent=5, block_seq_indent=3))
-    dump_file.close()
+    # dump_file = open(test_name+'.cgf', 'w')
+    # dump_file.write(ruamel.yaml.round_trip_dump(rcgf, indent=5, block_seq_indent=3))
+    # dump_file.close()
+    # Create an instance of YAML
+    yaml = YAML()
 
+    # Configure indentation as needed
+    yaml.indent(mapping=5, sequence=3)
+
+    # Open the file in write mode and write the YAML content to it
+    with open(test_name+'.cgf', 'w') as dump_file:
+    # Dump the YAML representation of 'rcgf' into 'dump_file'
+        yaml.dump(rcgf, dump_file)
+
+    
     if sig_addrs:
         logger.info('Creating Data Propagation Report : ' + test_name + '.md')
         writer = pytablewriter.MarkdownTableWriter()

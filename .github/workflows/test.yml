@@ -36,7 +36,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo xargs apt-get install -y < .github/ci-test/apt-packages.txt
-          pip3 install git+https://github.com/riscv/riscof.git
+          pip3 install riscof==1.25.3
           wget -c https://github.com/riscv-collab/riscv-gnu-toolchain/releases/download/2024.04.12/riscv64-elf-ubuntu-22.04-gcc-nightly-2024.04.12-nightly.tar.gz
           tar -xzf riscv64-elf-ubuntu-22.04-gcc-nightly-2024.04.12-nightly.tar.gz
           echo $GITHUB_WORKSPACE/riscv/bin >> $GITHUB_PATH

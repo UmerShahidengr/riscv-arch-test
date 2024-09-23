@@ -74,4 +74,4 @@ jobs:
         run: |
           cp .github/isa_templates/${{matrix.isa_group}}.yaml .github/ci-test/riscof/spike/spike_isa.yaml
           cd .github/ci-test/riscof
-          ./run-tests.sh
+          ./run-tests.sh {{matrix.isa_group}}_work

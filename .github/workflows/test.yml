@@ -53,9 +53,13 @@ jobs:
       
       - name: Test Dependencies
         run: |
+          echo "testing gcc"
           riscv64-unknown-elf-gcc --version
-          riscof --version
+          echo "testing riscof"
+          riscof --help
+          echo "testing spike"
           spike --help
+          echo "testing sail-riscv"
           riscv_sim_RV32 -h
           riscv_sim_RV64 -h
 

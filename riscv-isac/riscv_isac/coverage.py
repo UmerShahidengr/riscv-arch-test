@@ -687,11 +687,29 @@ class statistics:
 
         return temp
 
-def pretty_print_yaml(yaml):
-    res = ''''''
-    for line in ruamel.yaml.round_trip_dump(yaml, indent=5, block_seq_indent=3).splitlines(True):
-        res += line
+# def pretty_print_yaml(yaml):
+#     res = ''''''
+#     for line in ruamel.yaml.round_trip_dump(yaml, indent=5, block_seq_indent=3).splitlines(True):
+#         res += line
+#     return res
+
+def pretty_print_yaml(yaml_content):
+    # Create an instance of YAML
+    yaml = YAML()
+    # Configure indentation as needed
+    yaml.indent(mapping=5, sequence=3)
+    # Use a string stream to capture the YAML output
+    from io import StringIO
+    res_stream = StringIO()
+
+    # Dump the YAML content into the string stream
+    yaml.dump(yaml_content, res_stream)
+
+    # Retrieve the pretty-printed YAML as a string
+    res = res_stream.getvalue()
+    
     return res
+
 
 def pretty_print_regfile(regfile):
     res = ""
@@ -1515,11 +1533,30 @@ def compute(trace_file, test_name, cgf, parser_name, decoder_name, detailed, xle
         logger.err('Covergroup(s) for ' + str(cov_labels) + ' not found')
         sys.exit(1)
 
+    # if dump is not None:
+    #     dump_f = open(dump, 'w')
+    #     dump_f.write(ruamel.yaml.round_trip_dump(cgf, indent=5, block_seq_indent=3))
+    #     dump_f.close()
+    #     sys.exit(0)
+
+    
+    # Check if `dump` is not None
     if dump is not None:
-        dump_f = open(dump, 'w')
-        dump_f.write(ruamel.yaml.round_trip_dump(cgf, indent=5, block_seq_indent=3))
-        dump_f.close()
-        sys.exit(0)
+        # Create an instance of YAML
+        yaml = YAML()
+
+        # Configure indentation as needed
+        yaml.indent(mapping=5, sequence=3)
+
+        # Open the file in write mode using `with` for safe file handling
+        with open(dump, 'w') as dump_f:
+        # Dump the YAML representation of 'cgf' into the file
+            yaml.dump(cgf, dump_f)
+    
+    # Exit the program
+    sys.exit(0)
+
+
 
     arch_state = archState(xlen,flen,inxFlg)
     csr_regfile = csr_registers(xlen)

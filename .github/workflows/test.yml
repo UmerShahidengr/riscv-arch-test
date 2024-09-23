@@ -11,7 +11,7 @@ on:
   
   # Triggers the workflow on push events
   push:
-    branches: [ main , dev ]
+    branches: [ main , dev, ci_test ]
 
   # Allows you to run this workflow Actions manually
   workflow_dispatch:
@@ -25,28 +25,37 @@ on:
 jobs:
 
   ACT-sail-spike:
+    
     runs-on: ubuntu-latest
-    container: ghcr.io/riscv-software-src/riscof/act:latest
-    strategy:
-      fail-fast: false
-      matrix:
-        isa_group: 
-          - RV32IMCZicsr_Zifencei
-          - RV64IMCZicsr_Zifencei
-
 
     steps:
-
-      - name: Checkout source
-        uses: actions/checkout@v4
-
-      - name: Config riscof
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+        
+      - name: Install Dependencies
         run: |
-          git config --global --add safe.directory '*'
-          riscof setup --dutname=spike
-          cp .github/isa_templates/${{ matrix.isa_group }}.yaml spike/spike_isa.yaml
+          sudo xargs apt-get install -y < .github/workflows/apt-packages.txt
+          pip3 install git+https://github.com/riscv/riscof.git
+          wget -c https://github.com/riscv-collab/riscv-gnu-toolchain/releases/download/2024.04.12/riscv64-elf-ubuntu-22.04-gcc-nightly-2024.04.12-nightly.tar.gz
+          tar -xzf riscv64-elf-ubuntu-22.04-gcc-nightly-2024.04.12-nightly.tar.gz
+          echo $GITHUB_WORKSPACE/riscv/bin >> $GITHUB_PATH
 
-
-      - name: Run riscof
+      - name: Build Spike
         run: |
-          riscof --verbose debug run --suite . --env ./riscv-test-suite/env
+          .github/ci-test/build-spike.sh
+          echo $GITHUB_WORKSPACE/install/bin >> $GITHUB_PATH
+      
+      - name: Build sail-riscv
+        run: |
+          .github/ci-test/build-spike.sh
+          echo $GITHUB_WORKSPACE/c_emulator >> $GITHUB_PATH
+      
+      - name: Test Dependencies
+        run: |
+          riscv64-unknown-elf-gcc --version
+          riscof --version
+          spike --help
+          riscv_sim_RV32 -h
+          riscv_sim_RV64 -h
+

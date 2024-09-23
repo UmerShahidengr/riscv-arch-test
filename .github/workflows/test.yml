@@ -48,7 +48,7 @@ jobs:
       
       - name: Build sail-riscv
         run: |
-          .github/ci-test/build-spike.sh
+          .github/ci-test/sail-riscv.sh
           echo $GITHUB_WORKSPACE/c_emulator >> $GITHUB_PATH
       
       - name: Test Dependencies

@@ -45,9 +45,16 @@ li x1, 1                ;\
 
 #define RVMODEL_SET_MSW_INT
 
-#define RVMODEL_CLEAR_MSW_INT
 
-#define RVMODEL_CLEAR_MTIMER_INT
+#define RVMODEL_CLR_MSW_INT     ;\
+    li t0, 0x2000000           ;\
+    SREG x0, 0(t0)               ; 
+
+#define RVMODEL_CLR_MTIMER_INT  ;\
+    li t0, 0x20040000           ;\
+    li t2, -1                   ;\
+    SREG t2, 0(t0)               ; 
+
 
 #define RVMODEL_CLEAR_MEXT_INT
 

@@ -9,3 +9,11 @@
 *.DS_Store
 
 riscv-target/
+riscof-plugins/rv32/riscof_work/
+riscof-plugins/rv32/sail_cSim/__pycache__/
+riscof-plugins/rv32/spike_simple/__pycache__/
+
+riscof-plugins/rv64/riscof_work/
+riscof-plugins/rv64/sail_cSim/__pycache__/
+riscof-plugins/rv64/spike_simple/__pycache__/
+
